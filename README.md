@@ -1,3 +1,46 @@
+# Angular & TypeScript - Angular Reactive Forms App
+
+---
+
+# Temas puntuales de la sección
+
+### ¿Qué veremos en esta sección?
+
+Angular cuenta con varias maneras de manejar formularios pero como consejo sería mejor utilizar los formularios reactivos ya que hay mayor control y es más fácil poder manipular el formulario pero, los formularios por template sirven mucho cuando son tareas simples o rápidas aunque en esos casos igualmente se preferiría no utilizar formularios por template y simplemente tomar el valor que se necesita usando referencias locales.
+
+- Los formularios por template usan el FormsModule. Aquí la validación y lógica del formulario está más enfocada a trabajarla en el HTML lo cual es fácil al principio pero al ya haber validaciones personalizadas, validaciones asíncronas, etc. ya se vuelve mucho más complicado y añadie mucha lógica al HTML lo cual este archivo debería estar lo más limpio posible y dedicado la mayor parte a la estructura HTML como tal.
+- Los formularios reactivos usan el ReactiveFormsModule. Aquí la validación y lógica del formulario está más enfocada a trabajarla en el archivo de TypeScript (.ts) lo cual nos da mayor control.
+
+Los temas que se verán son:
+
+- Formularios Reactivos
+- Lazyload y tareas relacionadas
+- Validaciones propias de Angular
+- Validaciones personalizadas
+- Validaciones asíncronas
+- Arreglos y objetos anidados
+- FormBuilder
+- FormGroup
+- FormArray
+
+### \* PASOS A REALIZAR:
+
+1. ejemplo
+2. ejemplo
+3. ejemplo
+
+### \* RECURSOS A USAR:
+
+- Bootstrap (CDN): https://getbootstrap.com/
+  ```html
+  <!-- Bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+  ```
+- ejemplo
+- ejemplo
+
+---
+
 # AngularReactiveFormsApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.4.
