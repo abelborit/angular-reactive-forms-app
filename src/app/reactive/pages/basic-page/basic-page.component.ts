@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   templateUrl: './basic-page.component.html',
@@ -30,12 +35,14 @@ export class BasicPageComponent {
   public myForm: FormGroup = this.formBuilder.group({
     // name: [valor por defecto, validaciones síncronas, validaciones asíncronas],
     // name: ['', [], []],
-    name: [''],
-    price: [0],
-    inStorage: [0],
+    name: ['', [Validators.required, Validators.minLength(3)]],
+    price: [0, [Validators.required, Validators.min(0)]],
+    inStorage: [0, [Validators.required, Validators.min(0)]],
   });
 
   handleSaveForm(): void {
+    /* ya están las validaciones arriba pero igual se puede mandar el formulario, ahora hay que comprobarlas y cuando se cumplan todas entonces recién se podría enviar el formulario */
+    if (this.myForm.invalid) return; // si el formulario es inválido entonces que no haga nada
     console.log(this.myForm.value);
   }
 }

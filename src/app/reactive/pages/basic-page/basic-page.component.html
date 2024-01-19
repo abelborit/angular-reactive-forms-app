@@ -68,24 +68,47 @@
   </div>
 </div>
 
+<br />
+<hr />
+<br />
+
 <div class="row">
   <div class="col">
-    <span>Valid</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <!-- todas las validaciones tienen que ser true para que recién el formulario sea válido sino dará un false -->
+    <span><b>Valid</b></span>
+    <pre>{{ myForm.valid | json }}</pre>
 
-    <span>Pristine</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <!-- true si al formulario no se cambió algún valor de cualquier campo y false su valor opuesto (este valor se cambia a false permanentemente cuando se cambia algún valor de cualquier campo, ya no vuelve a true porque ya se cambió algún valor. Continúa en true y no cambia a false si solo se toca y se sale del campo porque no cambió como tal los valores del formulario) -->
+    <span><b>Pristine</b></span>
+    <pre>{{ myForm.pristine | json }}</pre>
 
-    <span>Touched</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <!-- false si el formulario no se ha tocado ni manipulado de ninguna manera y true su valor opuesto (este valor se cambia a true permanentemente cuando se toca un campo, ya no vuelve a false porque ya se tocó en alguna oportunidad algún campo) -->
+    <span><b>Touched</b></span>
+    <pre>{{ myForm.touched | json }}</pre>
 
-    <span>Value</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <!-- valores del formulario como tal -->
+    <span><b>Value</b></span>
+    <pre>{{ myForm.value | json }}</pre>
 
-    <span>Precio</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <!-- buscar un elemento en particular para mostrar cual es el valor del name -->
+    <span><b>Nombre producto - Value</b></span>
+    <pre>{{ myForm.controls["name"].value | json }}</pre>
+    <!-- buscar un elemento en particular para mostrar cual es el error de la propiedad name -->
+    <span><b>Nombre producto - Errors</b></span>
+    <pre>{{ myForm.controls["name"].errors | json }}</pre>
 
-    <span>Producto</span>
-    <pre>{{ "objeto" | json }}</pre>
+    <!-- buscar un elemento en particular para mostrar cual es el valor del price -->
+    <span><b>Precio - Value</b></span>
+    <pre>{{ myForm.controls["price"].value | json }}</pre>
+    <!-- buscar un elemento en particular para mostrar cual es el error de la propiedad price -->
+    <span><b>Precio - Errors</b></span>
+    <pre>{{ myForm.controls["price"].errors | json }}</pre>
+
+    <!-- buscar un elemento en particular para mostrar cual es el valor del inStorage -->
+    <span><b>Producto Cantidad - Value</b></span>
+    <pre>{{ myForm.controls["inStorage"].value | json }}</pre>
+    <!-- buscar un elemento en particular para mostrar cual es el error de la propiedad inStorage -->
+    <span><b>Producto Cantidad - Errors</b></span>
+    <pre>{{ myForm.controls["inStorage"].errors | json }}</pre>
   </div>
 </div>
