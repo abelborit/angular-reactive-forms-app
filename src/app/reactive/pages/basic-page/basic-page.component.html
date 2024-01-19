@@ -3,13 +3,16 @@
 
 <div class="row">
   <div class="col">
-    <form autocomplete="off">
+    <!-- conectar mi lógica del formulario reactivo "myForm" al formulario de HTML usando el [formGroup]="" pero eso solo conectará el objeto de myForm como tal mas no sus propiedades, eso lo tenemos que hacer por cada input que tengamos e ir conectado sus propiedades del myForm -->
+    <form [formGroup]="myForm" autocomplete="off" (ngSubmit)="handleSaveForm()">
       <!-- Campo de producto -->
       <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Producto</label>
         <div class="col-sm-9">
+          <!-- para conectar el input con las propiedades del formulario reactivo myForm se utilizará el formControlName="" pero vemos que no tendrá el intellisense ya que básicamente le pasaremos un string, si queremos que sea dinámico podríamos colocarlo como [formControlName]="" pero en general este solo sería el nombre del campo el cual va a corresponder a la propiedad de formulario reactivo myForm -->
           <input
             type="text"
+            formControlName="name"
             class="form-control"
             placeholder="Nombre del producto"
           />
@@ -27,6 +30,7 @@
         <div class="col-sm-9">
           <input
             type="number"
+            formControlName="price"
             class="form-control"
             placeholder="Precio del producto"
           />
@@ -42,6 +46,7 @@
         <div class="col-sm-9">
           <input
             type="number"
+            formControlName="inStorage"
             class="form-control"
             placeholder="Existencias del producto"
           />
