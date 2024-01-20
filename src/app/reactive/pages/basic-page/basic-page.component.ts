@@ -54,7 +54,11 @@ export class BasicPageComponent implements OnInit {
 
   handleSaveForm(): void {
     /* ya están las validaciones arriba pero igual se puede mandar el formulario, ahora hay que comprobarlas y cuando se cumplan todas entonces recién se podría enviar el formulario */
-    if (this.myForm.invalid) return; // si el formulario es inválido entonces que no haga nada
+    if (this.myForm.invalid) {
+      /* si el formulario es inválido entonces que marque todos los campos como "touched" y que no haga nada más. Esto con la finalidad de que cuando los campos y el formulario como tal no esté correcto entonces no se envíe nada y corte el proceso de este scope con el return y que al marcar todo como "touched" entonces se disparen las validaciones y hay una validación de que si el campo fue tocado y es inválido entonces salga algún mensaje de error para mejorar la experiencia del usuario */
+      this.myForm.markAllAsTouched();
+      return;
+    }
     console.log(this.myForm.value);
 
     /* el reset hace dos funciones:
