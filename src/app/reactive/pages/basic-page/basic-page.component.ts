@@ -43,6 +43,40 @@ export class BasicPageComponent implements OnInit {
     this.myForm.reset(fakeProduct);
   }
 
+  /* este función se podría trabajar también como un getter pero ahora lo haremos solo como un método y tendrá como objetivo simplificar la forma en cómo generar la validación si el campo está correcto o incorrecto y estará revisando si el campo en su objeto errors tiene algún error y si el campo fue tocado lo cual al final el método isNotValidField() devolverá un true o un false o también puede ser un null ya que el objeto errors si no tiene nada es un null y el touched devuelve un boolean */
+  isNotValidField(field: string): boolean | null {
+    // console.log('render isNotValidField');
+
+    return (
+      this.myForm.controls[field].errors && this.myForm.controls[field].touched
+    );
+  }
+
+  /* devolverá un null para que no se pinte nada en la UI aunque recordar que ya tiene la validación de arriba de mostrar o no la etiqueta HTML para el error o también solo podría regresar algo de tipo string y que retorne un string vacío en vez del null, es cuestión de preferencias */
+  getFieldError(field: string): string | null {
+    // console.log('render getFieldError');
+
+    if (!this.myForm.controls[field]) return null;
+
+    /* se coloca de esta forma para que fieldErrors al final retorne algo del tipo que tiene el .errors que es de tipo ValidationErrors | null y si no tiene nada en vez de que devuelva el null entonces sea un objeto vacío pero se puede colocar de esa forma o solo con el null, es cuestión de preferencias */
+    const fieldErrors = this.myForm.controls[field].errors || {};
+
+    for (const key of Object.keys(fieldErrors)) {
+      /* este console.log() aparecerá dos veces en consola porque hay cierta actualización que está sucediendo por parte del componente HTML de Angular que es parte del ciclo de detección de Angular y por eso aparece varias veces pero eso está bien */
+      // console.log({ key });
+
+      switch (key) {
+        case 'required':
+          return 'Este campo es requerido';
+
+        case 'minlength':
+          return `Este campo requiere mínimo ${fieldErrors['minlength'].requiredLength} caracteres`;
+      }
+    }
+
+    return null;
+  }
+
   /* se podría obviar colocar el tipo FormGroup porque al final lo va a inferir pero es buena práctica tipar lo más que se pueda */
   public myForm: FormGroup = this.formBuilder.nonNullable.group({
     // name: [valor por defecto, validaciones síncronas, validaciones asíncronas],
@@ -59,6 +93,7 @@ export class BasicPageComponent implements OnInit {
       this.myForm.markAllAsTouched();
       return;
     }
+
     console.log(this.myForm.value);
 
     /* el reset hace dos funciones:
@@ -82,3 +117,9 @@ export class BasicPageComponent implements OnInit {
 
 - Con formularios reactivos quiere decir que vamos a tener la mayor parte de la lógica en el componente de TypeScript (.ts) ya que con esto hay mayor control, mayor facilidad de uso, los datos que vamos a utilizar estarán en el lado del componente de TypeScript (.ts) my fácilmente.
 */
+
+/* ******************************************************************************************************************* */
+/* ¿Afecta el rendimiento en memoria el usar los getter - *ngIf - observable? */
+/* la logica o función de lo que contengan se ejecutan constantemente y es cierto que pueden generar ejecuciones innecesarias si no se manejan adecuadamente. Los getters y métodos en *ngIf se evalúan en cada ciclo de detección de cambios, lo que podría afectar el rendimiento si no se trabaja de forma eficiente. Los observables también pueden tener un impacto en el rendimiento si no se gestionan de manera adecuada, especialmente si no se liberan correctamente en el onDestroy del componente para evitar fugas de memoria.
+
+En cuanto al *ngIf en un control de formulario, el cambio se activará cada vez que haya cambios en el ciclo de vida del componente y no solo cuando el campo cambie. Esto significa que cualquier cambio en el ciclo de vida del componente podría activar la evaluación del *ngIf. Siempre es una buena práctica optimizar el código y minimizar las ejecuciones repetidas para lograr un mejor rendimiento. */
