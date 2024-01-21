@@ -1,12 +1,21 @@
-<h2>Reactivos: <small> Dinámicos </small></h2>
+<h2>Reactivos: Dinámicos</h2>
 <hr />
 
-<form autocomplete="off">
+<!--
+  submit: activa una llamada posterior a la URL/servidor del navegador, en pocas palabras, es un evento de envío de formulario predeterminado de html, llamará al método que tenga cuando se envíe el formulario.
+
+  ngSubmit: llama al componente angular local para hacer algo útil, es decir, puedes vincularlo a un método en el componente asociado al formulario y este método se ejecutará cuando se envíe el formulario. Utilizar ngSubmit permite aprovechar las características de Angular como la validación de formularios ANTES de la devolución a la URL/servidor del navegador. Se puede utilizar para tomar el envío de formularios o controlar el proceso de envío.
+-->
+<form autocomplete="off" [formGroup]="myForm" (ngSubmit)="handleSubmit()">
   <!-- Nombre -->
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">Nombre</label>
     <div class="col-sm-9">
-      <input class="form-control" placeholder="Nombre de la persona" />
+      <input
+        class="form-control"
+        placeholder="Nombre de la persona"
+        formControlName="name"
+      />
       <span class="form-text text-danger"> error message </span>
     </div>
   </div>
@@ -28,13 +37,22 @@
   <!-- Lista de Juegos Favoritos -->
   <div class="mb-3 row">
     <label class="col-sm-3 col-form-label">Favoritos</label>
-    <div class="col-sm-9">
-      <div class="mb-1">
+    <div class="col-sm-9" formArrayName="favoriteGames">
+      <!-- este favorite_control hace referencia a cada FormControl de cada elemento de getFavoriteGames.controls, se podría colocar como favorite para seguir la semántica del *ngFor="" y que haga referencia a cada juego "entre comillas" pero siguiendo la sintaxis correcta para este caso de los FormArray([]) sería mejor un nombre que haga referencia a cada FormControl que tiene el getFavoriteGames.controls. El getFavoriteGames se sabe que es un FormArray pero no es un arreglo como tal, tiene el nombre includo de "array" pero en realidad es solo un objeto que se llama FormArray y no es el array de controles (no es el array de los FormControl()) entonces los controles o los FormControl() están dentro de la propiedad .controls -->
+      <div
+        class="mb-1"
+        *ngFor="
+          let favorite_control of getFavoriteGames.controls;
+          let i = index
+        "
+      >
         <div class="input-group">
-          <input class="form-control" />
+          <!-- este [formControlName]="i" nos ayudará a enlazar basado en la posición ya que es dinámico, es decir, si son 20 elementos entonces son 20 enlaces que tendríamos. Se coloca con [formControlName]="i" ya que acá estamos validando contra un array no una propiedad en especifico por ello es que tomará el valor dentro del FormControl definido en el indice que se encuentra dentro del array -->
+          <input class="form-control" [formControlName]="i" />
 
           <button class="btn btn-outline-danger" type="button">Eliminar</button>
         </div>
+        <!-- para los errores será un poco dificl evaluarlo aquí ya que se tiene que evaluar el FormControl() en getFavoriteGames.controls en la posición i tiene algún error -->
         <span class="form-text text-danger"> Este campo es requerido </span>
       </div>
     </div>
