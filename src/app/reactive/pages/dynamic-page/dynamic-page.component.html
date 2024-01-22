@@ -53,7 +53,13 @@
           <!-- este [formControlName]="i" nos ayudará a enlazar basado en la posición ya que es dinámico, es decir, si son 20 elementos entonces son 20 enlaces que tendríamos. Se coloca con [formControlName]="i" ya que acá estamos validando contra un array y no contra una propiedad en especifico por ello es que tomará el valor dentro del FormControl definido en el índice que se encuentra dentro del array -->
           <input class="form-control" [formControlName]="i" />
 
-          <button class="btn btn-outline-danger" type="button">Eliminar</button>
+          <button
+            class="btn btn-outline-danger"
+            type="button"
+            (click)="handleDeleteFavorite(i)"
+          >
+            Eliminar
+          </button>
         </div>
         <!-- para los errores será un poco dificl evaluarlo aquí ya que se tiene que evaluar el FormControl() en getFavoriteGames.controls en la posición i si tiene algún error. Como es un solo error específico entonces se hará directo pero si fueran más errores entonces se podría crear un método similar a getFieldError el cual recibiría el arreglo de tipo FormArray y según el tipo de error de cada FormControl que tenga entonces regrese un mensaje de error -->
 

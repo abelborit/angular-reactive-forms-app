@@ -80,6 +80,11 @@ export class DynamicPageComponent {
     return null;
   }
 
+  handleDeleteFavorite(index: number): void {
+    /* aquí se podría hacer de la forma tradicional con this.myForm.controls['favoriteGames']....... pero ya tenemos un getter que regresa eso en el getFavoriteGames() y en JavaScript como todo pasa por referencia entonces hacer una eliminación en getFavoriteGames() hará una eliminación en el arreglo de forma directa y usaremos removeAt() que es un método de los arreglos en general y se le pasa el index para que elimine un objeto de una lista según el índice: https://api.dart.cn/stable/3.2.5/dart-js/JsArray/removeAt.html#:~:text=Removes%20the%20object%20at%20position,Returns%20the%20removed%20value. */
+    this.getFavoriteGames.removeAt(index);
+  }
+
   handleSubmit(): void {
     if (this.myForm.invalid) {
       /* si el formulario es inválido entonces que marque todos los campos como "touched" y que no haga nada más. Esto con la finalidad de que cuando los campos y el formulario como tal no esté correcto entonces no se envíe nada y corte el proceso de este scope con el return y que al marcar todo como "touched" entonces se disparen las validaciones y hay una validación de que si el campo fue tocado y es inválido entonces salga algún mensaje de error para mejorar la experiencia del usuario */
