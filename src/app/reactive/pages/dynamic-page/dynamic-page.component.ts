@@ -139,3 +139,13 @@ export class DynamicPageComponent {
     this.myForm.reset();
   }
 }
+
+/* ******************************************************************************************************************* */
+/* ¿Reactive Forms no realizan data binding? */
+/*
+En los Reactive Forms se realiza data binding, pero de manera más explícita y controlada en comparación con los Template Forms. La afirmación de que "no se realiza data binding" se puede interpretar en el sentido de que los Reactive Forms permiten definir la lógica de data binding directamente en el componente, en lugar de depender en gran medida de directivas en el template, lo que da como resultado un código más limpio y fácil de mantener.  Al utilizar Reactive Forms, los programadores tenemos un mayor control sobre la manipulación de los datos y la validación, lo que puede ser preferible en situaciones más complejas o en proyectos con equipos grandes donde se valora la claridad y el mantenimiento del código.
+
+Aunque los valores de los inputs y formcontrols están bindeados en los Reactive Forms, su implementación proporciona un enfoque más explícito y controlado para el data binding que puede ser preferible en determinadas situaciones.
+
+Artículo del 2023 donde nos hablan sobre los Reactive Forms y los Template-Driven Forms: https://jasonwatmore.com/angular-template-driven-vs-reactive-forms
+*/
