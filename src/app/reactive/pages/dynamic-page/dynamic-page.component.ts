@@ -30,6 +30,13 @@ export class DynamicPageComponent {
     ]),
   });
 
+  /* este es solo un campo reactivo que tendrá sus propias validaciones ya que no pertenece a un formulario como tal, se podría crear con un new FormControl() o usando el servicio FormBuilder */
+  // public newFavorite: FormControl = new FormControl('', Validators.required);
+  public newFavorite: FormControl = this.formBuilder.nonNullable.control(
+    '',
+    Validators.required
+  );
+
   /* en el campo del formulario HTML hay que hacer referencia al favoriteGames y para eso hay que enlazar el input HTML con la propiedad del formulario favoriteGames pero como favoriteGames es un arreglo entonces en el HTML se usaría un *ngFor="" y en vez de que tenga toda la lógica en el HTML para enlazar el input con la propiedad del formulario entonces mejor es crear un getter para acceder a la propiedad y sus valores */
   get getFavoriteGames() {
     /* aquí se podría hacer con el controls como this.myForm.controls['favoriteGames']..... pero también se podría usar el get(nombre_campo) pero dejarlo solo de esa forma entonces nos dirá que es de tipo AbstractControl<any, any> | null es decir, que es un FormControl pero que no sabe de qué tipo de FormControl entonces siguiendo la documentación nos dice que colocamos as FormArray para que sepa que es un FormArray([]) y que podemos iterarlo */
@@ -80,6 +87,29 @@ export class DynamicPageComponent {
     return null;
   }
 
+  handleAddFavorite(): void {
+    if (this.newFavorite.invalid) return;
+    // console.log(this.newFavorite.value);
+
+    const newElement = this.newFavorite.value;
+
+    /* si no se estuviera trabajando con el servicio FormBuilder entonces se haría de la manera clásica con el FormControl y mandándole el valor y si tiene o no validaciones */
+    // this.getFavoriteGames.push(
+    //   new FormControl(newElement, Validators.required)
+    // );
+
+    /* Propiedad read-only:
+    La propiedad "read-only" en Angular se refiere a una propiedad que solo se puede leer, pero no se puede modificar. En otras palabras, solo se puede acceder a su valor, pero no se puede cambiar su valor. Aquí se declara un getter llamado "getFavoriteGames" que devuelve un array de juegos favoritos. Este getter es de solo lectura, lo que significa que no se puede modificar directamente.
+
+    Sin embargo, en el método "handleAddFavorite()", se agrega un nuevo juego al array "getFavoriteGames" utilizando el método "push()". Esto puede parecer contradictorio, pero en realidad es posible porque el array en sí no es de solo lectura, solo el getter que devuelve el array es de solo lectura. Por lo tanto, aunque el getter no se puede modificar directamente, el array que devuelve sí se puede modificar */
+
+    /* aquí se está diciendo que se añadirá al arreglo de getFavoriteGames un FormControl mediante el servicio FormBuilder el cual tendrá un nuevo elemento y sus validaciones */
+    this.getFavoriteGames.push(
+      this.formBuilder.control(newElement, Validators.required)
+    );
+    this.newFavorite.reset();
+  }
+
   handleDeleteFavorite(index: number): void {
     /* aquí se podría hacer de la forma tradicional con this.myForm.controls['favoriteGames']....... pero ya tenemos un getter que regresa eso en el getFavoriteGames() y en JavaScript como todo pasa por referencia entonces hacer una eliminación en getFavoriteGames() hará una eliminación en el arreglo de forma directa y usaremos removeAt() que es un método de los arreglos en general y se le pasa el index para que elimine un objeto de una lista según el índice: https://api.dart.cn/stable/3.2.5/dart-js/JsArray/removeAt.html#:~:text=Removes%20the%20object%20at%20position,Returns%20the%20removed%20value. */
     this.getFavoriteGames.removeAt(index);
@@ -93,6 +123,19 @@ export class DynamicPageComponent {
     }
 
     console.log(this.myForm.value);
+
+    /* hacerlo como la FORMA 1 y al hacer el primer submit del formulario funciona normal porque lo inicializa como un arreglo vacío nuevamente pero al querer agregar nuevos elementos al favoriteGames veremos que no se añaden nuevos elementos, una idea puede ser que esto no lo trabaje de forma reactiva, es decir, como que rompe el estado del formArray y no proporciona una forma de cambiar dinámicamente el tipo de control si es necesario en el futuro, entonces para solucionar esto hay algunas formas las cuales las mejores opciones para este caso podrían se la FORMA 2 o FORMA 3 */
+
+    /* FORMA 1: hay problemas al querer agregar un nuevo elemento en el campo favoriteGames */
+    /* aquí no se hace con el getter para colocar el arreglo vacío ya que es un getter y se tendría que implementar un setter entonces lo haremos con el formulario completo tomando solo el campo necesario que sería el favoriteGames y se coloca as FormArray para que lo trate como si fuera un FormArray ya que lo estaba tratando como un campo en general, luego se le iguala a un nuevo FormArray que sea un arreglo vacío usando el servicio FormBuilder o sino también un new FormArray([]) que sería lo mismo */
+    // (this.myForm.controls['favoriteGames'] as FormArray) = this.formBuilder.array([]);
+
+    /* FORMA 2: utilizando setControl() que utiliza un setter para cambiar/resetear el valor de ese FormControl, en este caso que contiene un form array lo cual puede ser útil cuando se necesita cambiar dinámicamente el tipo de control en tiempo de ejecución pero no es tan necesario si solo se está reemplazando el contenido de un FormArray */
+    // this.myForm.setControl('favoriteGames', this.formBuilder.array([]));
+
+    /* FORMA 3 usando el método .clear() que elimina todos los controles presentes en el FormArray. Esto es útil si deseas reiniciar o limpiar completamente el FormArray sin asignar uno nuevo aunque no es necesario si se está asignando un nuevo FormArray pero en este caso solo queremos limpiarlo */
+    this.getFavoriteGames.clear();
+
     this.myForm.reset();
   }
 }

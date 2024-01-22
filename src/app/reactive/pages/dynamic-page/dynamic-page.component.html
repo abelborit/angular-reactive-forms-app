@@ -28,9 +28,19 @@
     <label class="col-sm-3 col-form-label">Agregar</label>
     <div class="col-sm-9">
       <div class="input-group">
-        <input class="form-control" placeholder="Agregar favorito" />
+        <!-- el [formControl]="" es para vincular o enlazar un FormControl() como tal el cual se está creando de forma aislada solo como un campo reactivo que no pertenece a ningún formulario -->
+        <!-- darse cuenta también que al presionar enter cuando se esté en el campo de agregar favorito se hará el evento submit del formulario y no el de "Agregar favorito" ya que todo está dentro de la etiqueta <form>.....</form> entonces una opción podría ser que este campo sacarlo del <form>.....</form> y crear otro pero en este caso lo dejaremos así tal cual -->
+        <input
+          class="form-control"
+          placeholder="Agregar favorito"
+          [formControl]="newFavorite"
+        />
 
-        <button class="btn btn-outline-primary" type="button">
+        <button
+          class="btn btn-outline-primary"
+          type="button"
+          (click)="handleAddFavorite()"
+        >
           Agregar favorito
         </button>
       </div>
@@ -51,6 +61,7 @@
       >
         <div class="input-group">
           <!-- este [formControlName]="i" nos ayudará a enlazar basado en la posición ya que es dinámico, es decir, si son 20 elementos entonces son 20 enlaces que tendríamos. Se coloca con [formControlName]="i" ya que acá estamos validando contra un array y no contra una propiedad en especifico por ello es que tomará el valor dentro del FormControl definido en el índice que se encuentra dentro del array -->
+          <!-- si se trabajara con un FormArray pero que tenga objetos y no solo valores directos como en este caso, entonces se usaría la directiva [formGroupName]="" para iterar sobre los controles de FormArray y tener acceso a las propiedades de cada objeto e igual se colocaría de esta forma [formGroupName]="i"-->
           <input class="form-control" [formControlName]="i" />
 
           <button
@@ -83,14 +94,18 @@
   </div>
 </form>
 
-<span>Valid</span>
-<pre>{{ "object" | json }}</pre>
+<br />
+<hr />
 <br />
 
-<span>Value</span>
-<pre>{{ "object" | json }}</pre>
+<span><b>Formulario</b></span>
+<pre><b>Valid:</b> {{ myForm.valid | json }}</pre>
+<pre><b>Errors:</b> {{ myForm.controls["name"].errors | json }}</pre>
+<pre><b>Value:</b> {{ myForm.value | json }}</pre>
+
 <br />
 
-<span>Agregar Juego</span>
-<pre>{{ "object" | json }}</pre>
-<pre>{{ "object" | json }}</pre>
+<span><b>Agregar Juego</b></span>
+<pre><b>Valid:</b> {{ newFavorite.valid | json }}</pre>
+<pre><b>Errors:</b> {{ myForm.controls["favoriteGames"].errors | json }}</pre>
+<pre><b>Value:</b> {{ newFavorite.value | json }}</pre>
