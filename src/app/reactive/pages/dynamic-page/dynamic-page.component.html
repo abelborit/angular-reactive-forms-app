@@ -16,7 +16,10 @@
         placeholder="Nombre de la persona"
         formControlName="name"
       />
-      <span class="form-text text-danger"> error message </span>
+
+      <span class="form-text text-danger" *ngIf="isNotValidField('name')">
+        {{ getFieldError("name") }}
+      </span>
     </div>
   </div>
 
@@ -47,13 +50,19 @@
         "
       >
         <div class="input-group">
-          <!-- este [formControlName]="i" nos ayudará a enlazar basado en la posición ya que es dinámico, es decir, si son 20 elementos entonces son 20 enlaces que tendríamos. Se coloca con [formControlName]="i" ya que acá estamos validando contra un array no una propiedad en especifico por ello es que tomará el valor dentro del FormControl definido en el indice que se encuentra dentro del array -->
+          <!-- este [formControlName]="i" nos ayudará a enlazar basado en la posición ya que es dinámico, es decir, si son 20 elementos entonces son 20 enlaces que tendríamos. Se coloca con [formControlName]="i" ya que acá estamos validando contra un array y no contra una propiedad en especifico por ello es que tomará el valor dentro del FormControl definido en el índice que se encuentra dentro del array -->
           <input class="form-control" [formControlName]="i" />
 
           <button class="btn btn-outline-danger" type="button">Eliminar</button>
         </div>
-        <!-- para los errores será un poco dificl evaluarlo aquí ya que se tiene que evaluar el FormControl() en getFavoriteGames.controls en la posición i tiene algún error -->
-        <span class="form-text text-danger"> Este campo es requerido </span>
+        <!-- para los errores será un poco dificl evaluarlo aquí ya que se tiene que evaluar el FormControl() en getFavoriteGames.controls en la posición i si tiene algún error. Como es un solo error específico entonces se hará directo pero si fueran más errores entonces se podría crear un método similar a getFieldError el cual recibiría el arreglo de tipo FormArray y según el tipo de error de cada FormControl que tenga entonces regrese un mensaje de error -->
+
+        <span
+          class="form-text text-danger"
+          *ngIf="isNotValidFieldInArray(getFavoriteGames, i)"
+        >
+          Este campo es requerido
+        </span>
       </div>
     </div>
   </div>

@@ -36,6 +36,50 @@ export class DynamicPageComponent {
     return this.myForm.get('favoriteGames') as FormArray;
   }
 
+  /* este función se podría trabajar también como un getter pero ahora lo haremos solo como un método y tendrá como objetivo simplificar la forma en cómo generar la validación si el campo está correcto o incorrecto y estará revisando si el campo en su objeto errors tiene algún error y si el campo fue tocado lo cual al final el método isNotValidField() devolverá un true o un false o también puede ser un null ya que el objeto errors si no tiene nada es un null y el touched devuelve un boolean */
+  isNotValidField(field: string): boolean | null {
+    // console.log('render isNotValidField');
+
+    return (
+      this.myForm.controls[field].errors && this.myForm.controls[field].touched
+    );
+  }
+
+  /* este método recivirá el formArray a evaluar pero también se necesita verificar qué elemento de ese formArray se está modificando a través del índice como se colocó en el  *ngFor="". Se coloca esta función ya que en isNotValidField se basa en un FormControl en específico pero aquí en isNotValidFieldInArray se basa en un FormControl pero perteneciente a un FormArray */
+  isNotValidFieldInArray(formArray: FormArray, index: number) {
+    // console.log('render isNotValidFieldInArray');
+    // console.log({ formArray, index });
+
+    return (
+      formArray.controls[index].errors && formArray.controls[index].touched
+    );
+  }
+
+  /* devolverá un null para que no se pinte nada en la UI aunque recordar que ya tiene la validación de arriba de mostrar o no la etiqueta HTML para el error o también solo podría regresar algo de tipo string y que retorne un string vacío en vez del null, es cuestión de preferencias */
+  getFieldError(field: string): string | null {
+    // console.log('render getFieldError');
+
+    if (!this.myForm.controls[field]) return null;
+
+    /* se coloca de esta forma para que fieldErrors al final retorne algo del tipo que tiene el .errors que es de tipo ValidationErrors | null y si no tiene nada en vez de que devuelva el null entonces sea un objeto vacío pero se puede colocar de esa forma o solo con el null, es cuestión de preferencias */
+    const fieldErrors = this.myForm.controls[field].errors || {};
+
+    for (const key of Object.keys(fieldErrors)) {
+      /* este console.log() aparecerá dos veces en consola porque hay cierta actualización que está sucediendo por parte del componente HTML de Angular que es parte del ciclo de detección de Angular y por eso aparece varias veces pero eso está bien */
+      // console.log({ key });
+
+      switch (key) {
+        case 'required':
+          return 'Este campo es requerido';
+
+        case 'minlength':
+          return `Este campo requiere mínimo ${fieldErrors['minlength'].requiredLength} caracteres`;
+      }
+    }
+
+    return null;
+  }
+
   handleSubmit(): void {
     if (this.myForm.invalid) {
       /* si el formulario es inválido entonces que marque todos los campos como "touched" y que no haga nada más. Esto con la finalidad de que cuando los campos y el formulario como tal no esté correcto entonces no se envíe nada y corte el proceso de este scope con el return y que al marcar todo como "touched" entonces se disparen las validaciones y hay una validación de que si el campo fue tocado y es inválido entonces salga algún mensaje de error para mejorar la experiencia del usuario */
