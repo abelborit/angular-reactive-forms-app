@@ -98,14 +98,15 @@
 
 <br />
 <hr />
-<br />
 
 <p><b>Form Valid: </b>{{ myForm.valid }}</p>
 <p><b>Form Status: </b>{{ myForm.status }}</p>
 <p><b>Form Pending: </b>{{ myForm.pending }}</p>
 
-<p><b>Form errors: </b></p>
+<p><b>Form errors:</b></p>
 <pre>{{ myForm.errors | json }}</pre>
+
+<hr />
 
 <p><b>Nombre: </b>{{ myForm.value.name | json }}</p>
 <!-- accediendo a un control específico del fomrulario -->
@@ -113,18 +114,41 @@
 <!-- accediendo de forma manual a una propiedad del value del formulario -->
 <!-- <pre>{{ myForm.value.name | json }}</pre> -->
 
+<p><b>Nombre - Errors:</b></p>
+<pre>{{ myForm.controls["name"].errors | json }}</pre>
+
+<hr />
+
 <p><b>Email: </b>{{ myForm.value.email | json }}</p>
 <!-- <pre>{{ myForm.controls["email"].value | json }}</pre> -->
 <!-- <pre>{{ myForm.value.email | json }}</pre> -->
+
+<p><b>Email - Errors:</b></p>
+<pre>{{ myForm.controls["email"].errors | json }}</pre>
+
+<hr />
 
 <p><b>Username: </b>{{ myForm.value.username | json }}</p>
 <!-- <pre>{{ myForm.controls["username"].value | json }}</pre> -->
 <!-- <pre>{{ myForm.value.username | json }}</pre> -->
 
+<p><b>Username - Errors:</b></p>
+<pre>{{ myForm.controls["username"].errors | json }}</pre>
+
+<hr />
+
 <p><b>Password: </b>{{ myForm.value.password | json }}</p>
 <!-- <pre>{{ myForm.controls["password"].value | json }}</pre> -->
 <!-- <pre>{{ myForm.value.password | json }}</pre> -->
 
+<p><b>Password - Errors:</b></p>
+<pre>{{ myForm.controls["password"].errors | json }}</pre>
+
+<hr />
+
 <p><b>Confirmar Password: </b>{{ myForm.value.password2 | json }}</p>
 <!-- <pre>{{ myForm.controls["password2"].value | json }}</pre> -->
 <!-- <pre>{{ myForm.value.password2 | json }}</pre> -->
+
+<p><b>Confirmar Password - Errors:</b></p>
+<pre>{{ myForm.controls["password2"].errors | json }}</pre>
