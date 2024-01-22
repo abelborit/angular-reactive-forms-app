@@ -23,6 +23,15 @@ Los temas que se verán son:
 - FormGroup
 - FormArray
 
+Adicionalmente se verán:
+
+- Validaciones manuales
+- Validaciones asíncronas
+- Validar contra expresiones regulares
+- Separar la lógica de validaciones
+- Estado del formulario
+- Mensajes de error personalizados
+
 ### \* PASOS A REALIZAR:
 
 1. ejemplo
