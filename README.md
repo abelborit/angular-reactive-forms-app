@@ -13,7 +13,7 @@ Angular cuenta con varias maneras de manejar formularios pero como consejo serí
 
 Los temas que se verán son:
 
-- Formularios Reactivos
+- Formularios Reactivos (https://angular.io/guide/reactive-forms)
 - Lazyload y tareas relacionadas
 - Validaciones propias de Angular
 - Validaciones personalizadas
