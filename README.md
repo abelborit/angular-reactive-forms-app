@@ -48,6 +48,16 @@ Adicionalmente se verán:
 - ejemplo
 - ejemplo
 
+### \* NOTAS:
+
+Para las validaciones personalizadas se podría trabajar de algunas formas pero lo que sí es necesario es que para las funciones validadoras lo adecuado es que tengan una sola tarea de validación para hacer el código más limpio y facil de mantener. Algunas formas de trabajar con las validaciones personalizadas son:
+
+- **FORMA 1: `validators.ts`** tener varias funciones en un archivo aparte como en este caso que es un archivo helper que nos ayudará a centralizar todo lo referido a validaciones de formularios. También se pueden crear varios archivos helpers con distintas validaciones según sea el caso. Lo único raro es que se tiene la lógica separada en un archivo aparte como un archivo helper lo cual no está mal tenerlo así ya que es una opción válido solo que es un poco raro y cuando las funciones de validaciones sean más grandes puede ser que sea un poco más dificil el trabajarlo como archivo aparte.
+
+- **FORMA 2: `validators.service.ts`** crear un servicio para las validaciones para hacer la inyección de dependencias e inyectar ese servicio de validaciones al componente y con eso tener todo lo que necesito en ese objeto que retorna el servicio. La ventaja de inyectarlo es que tendríamos acceso al ciclo vida de los componentes de Angular, inyectar otros servicios, etc.
+
+- **FORMA 3: ` email-validator.service.ts`** trabajar similar a los Guards que es utilizar esa estrategia o ese mismo patrón de implementar una clase con una característica o función o propiedad para que pueda ser usado como un validador asíncrono de forma automática. (En los Guards se utilizaba antes "Nombre_Guard implements canMatch...." pero luego se cambio de componentes de clase a componentes funcionales, entonces aquí se hará algo similar con el implements que es la forma antiguar de trabajar con los Guards que será "Nombre_Servicio implements AsyncValidator" para que este servicio creado funcione como validador asíncrono)
+
 ---
 
 # AngularReactiveFormsApp

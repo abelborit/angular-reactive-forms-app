@@ -1,10 +1,3 @@
-/* para las validaciones personalizadas se podría trabajar de dos formas:
-  - FORMA 1: tener varias funciones en un archivo aparte como en este caso que es un archivo helper que nos ayudará a centralizar todo lo referido a validaciones de formularios. También se pueden crear varios archivos helpers con distintas validaciones según sea el caso. Lo único raro es que se tiene la lógica separada en un archivo aparte como un archivo helper lo cual no está mal tenerlo así ya que es una opción válido solo que es un poco raro y cuando las funciones de validaciones sean más grandes puede ser que sea un poco más dificil el trabajarlo como archivo aparte.
-  - FORMA 2: crear un servicio para las validaciones para hacer la inyección de dependencias e inyectar ese servicio de validaciones al componente y con eso tener todo lo que necesito en ese objeto que retorna el servicio. La ventaja de inyectarlo es que tendríamos acceso al ciclo vida de los componentes de Angular, inyectar otros servicios, etc...
-
-  Lo que sí es necesario es que para las funciones validadoras lo adecuado es que tengan una sola tarea de validación para hacer el código más limpio y facil de mantener.
-*/
-
 /* para saber si es una validación asíncrona entonces la función validadora debería regresar un Observable<ValidationErrors | null> o Promise<ValidationErrors | null> o algo similar referido al trabajo asíncrono, pero si no regresa nada de eso entonces es una validación síncrona */
 import { FormControl, ValidationErrors } from '@angular/forms';
 
